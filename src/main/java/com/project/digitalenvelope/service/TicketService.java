@@ -9,22 +9,18 @@ import com.project.digitalenvelope.entity.Member;
 import com.project.digitalenvelope.entity.Ticket;
 import com.project.digitalenvelope.repository.MemberRepository;
 import com.project.digitalenvelope.repository.TicketRepository;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.crypto.SecretKey;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.security.Key;
 import java.security.PublicKey;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 
 
@@ -39,8 +35,6 @@ public class TicketService {
     final TicketRepository ticketRepository;
 
     public boolean bookTicket(UserReq userReq, TicketReq ticketReq){ //전자 서명 생성
-        log.info(userReq.getPassportId());
-        log.info(userReq.getAddr());
         Random random = new Random();
         int randomNum = random.nextInt(1001);
 
@@ -50,13 +44,13 @@ public class TicketService {
         //로컬에 저장
         keyManager.saveKey(keyManager.getPrivateKey(),randomNum+"privateKey");
         keyManager.saveKey(keyManager.getPublicKey(), randomNum+"publicKey");
-
         //직렬화
-        byte[] data = serializeObject(userReq);
+        byte[] userData = serializeObject(userReq);
+
 
         //전자봉투 생성
         SignatureManager signatureManager = new SignatureManager();
-        byte[] signatureData = signatureManager.create( keyManager.getPrivateKey(), data);
+        byte[] signatureData = signatureManager.create( keyManager.getPrivateKey(), userData);
 
         //항공권 정보 암호화
         byte[] ticketData = serializeObject(ticketReq);
@@ -74,6 +68,7 @@ public class TicketService {
                 .firstName(userReq.getFirstName())
                 .signature(signatureData)
                 .build();
+
         Member savedMember = memberRepository.save(member);
 
         Ticket ticket = Ticket.builder()
@@ -87,8 +82,9 @@ public class TicketService {
 
     public TicketReq readTicketHistory(UserReq userReq){
 
-
-        Member member = memberRepository.findByFirstName(userReq.getFirstName());
+        char[] charArray = userReq.getFirstName();
+        String firstName = new String(charArray);
+        Member member = memberRepository.findByFirstName(firstName);
 
         //퍼블릭키 가져오기
         String publicKeyName = member.getPublicKeyPath();
@@ -99,6 +95,7 @@ public class TicketService {
         SignatureManager signatureManager = new SignatureManager();
         //입력된 직렬화
         byte[] data = serializeObject(userReq);
+
         //verify
         boolean res = signatureManager.verify(data, member.getSignature(),publicKey);
         
@@ -143,7 +140,7 @@ public class TicketService {
         } catch (Exception e) {
             // 예외 처리
             e.printStackTrace();
-            return null;
+            return new byte[0];
         }
     }
 }

@@ -13,9 +13,9 @@ public class SignatureManager {
             sig.initSign((PrivateKey) key);
             sig.update(data);
             signature = sig.sign();
-
         } catch (SignatureException e) {
             e.printStackTrace();
+            signature = new byte[0];
         } catch (InvalidKeyException e) {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {

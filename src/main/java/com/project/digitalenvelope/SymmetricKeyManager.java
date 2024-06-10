@@ -11,7 +11,7 @@ import java.security.*;
 @Getter
 public class SymmetricKeyManager {
     final String algorithm = "AES";
-    private Key secretKey;
+    public Key secretKey;
 
     public Key create(int bytes) {
         //키 생성
@@ -28,7 +28,7 @@ public class SymmetricKeyManager {
 
     public byte[] decrypt(byte[] data, Key key) {
         byte[] decrypedData = null;
-        Cipher c = null;
+        Cipher c ;
 
         try {
             c = Cipher.getInstance(key.getAlgorithm());
@@ -48,7 +48,7 @@ public class SymmetricKeyManager {
 
     public byte[] encrypt(byte[] data, Key key) {
         byte[] encryptedData = null;
-        Cipher c = null;
+        Cipher c;
 
         try {
             c = Cipher.getInstance(key.getAlgorithm());

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Ticket History</title>
@@ -84,11 +84,11 @@
             <h5 class="card-subtitle mb-2 text-muted">도착지: <span th:text="${reservationRes.to}"></span></h5>
             <h5 class="card-subtitle mb-2 text-muted">출발일: <span th:text="${reservationRes.date}"></span></h5>
             <h5 class="card-subtitle mb-2 text-muted">좌석: <span th:text="${reservationRes.seat}"></span></h5>
-            <h5 class="card-subtitle mb-2 text-muted">국적: <span th:text="${reservationRes.country}"></span></h5>
-            <h5 class="card-subtitle mb-2 text-muted">여권번호: <span th:text="${reservationRes.passportId}"></span></h5>
-            <h5 class="card-subtitle mb-2 text-muted">생년월일: <span th:text="${reservationRes.birth}"></span></h5>
-            <h5 class="card-subtitle mb-2 text-muted">성: <span th:text="${reservationRes.lastName}"></span></h5>
-            <h5 class="card-subtitle mb-2 text-muted">이름: <span th:text="${reservationRes.firstName}"></span></h5>
+            <h5 class="card-subtitle mb-2 text-muted">국적: <span th:text="${country}"></span></h5>
+            <h5 class="card-subtitle mb-2 text-muted">여권번호: <span th:text="${passportId}"></span></h5>
+            <h5 class="card-subtitle mb-2 text-muted">생년월일: <span th:text="${birth}"></span></h5>
+            <h5 class="card-subtitle mb-2 text-muted">성: <span th:text="${lastName}"></span></h5>
+            <h5 class="card-subtitle mb-2 text-muted">이름: <span th:text="${firstName}"></span></h5>
         </div>
     </div>
 </div>

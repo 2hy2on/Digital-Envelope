@@ -9,9 +9,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -25,7 +25,6 @@ public class TicketController {
     //티켓 예매
     @PostMapping("/ticket")
     public String create(ReservationReq reservationReq ){
-        log.info(reservationReq.getAddr());
         TicketReq ticketReq = TicketReq.builder()
                 .date(reservationReq.getDate())
                 .from(reservationReq.getFrom())
@@ -33,14 +32,13 @@ public class TicketController {
                 .to(reservationReq.getTo())
                 .build();
         UserReq userReq = UserReq.builder()
-                .addr(reservationReq.getAddr())
                 .birth(reservationReq.getBirth())
-                .phone(reservationReq.getPhone())
                 .country(reservationReq.getCountry())
                 .firstName(reservationReq.getFirstName())
                 .lastName(reservationReq.getLastName())
                 .passportId(reservationReq.getPassportId())
                 .build();
+
         ticketService.bookTicket(userReq, ticketReq);
 
         return "ticket/finishReservation";
@@ -54,7 +52,6 @@ public class TicketController {
                 .passportId(userReq.getPassportId())
                 .lastName(userReq.getLastName())
                 .firstName(userReq.getFirstName())
-                .addr(userReq.getAddr())
                 .from(ticketReq.getFrom())
                 .to(ticketReq.getTo())
                 .date(ticketReq.getDate())
@@ -62,6 +59,12 @@ public class TicketController {
                 .country(userReq.getCountry())
                 .build();
         model.addAttribute("reservationRes", reservationRes);
+        model.addAttribute("lastName", String.valueOf(reservationRes.getLastName()));
+        model.addAttribute("firstName", String.valueOf(reservationRes.getFirstName()));
+        model.addAttribute("passportId", String.valueOf(reservationRes.getPassportId()));
+        model.addAttribute("birth", String.valueOf(reservationRes.getBirth()));
+        model.addAttribute("country", String.valueOf(reservationRes.getCountry()));
+
         return "/member/ticketHistory";
     }
 
