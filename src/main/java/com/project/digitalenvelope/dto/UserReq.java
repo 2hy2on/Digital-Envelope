@@ -10,11 +10,9 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 public class UserReq implements Serializable {
-    private String passportId;
-    private String birth;
-    private String firstName;
-    private String lastName;
-    private String country;
-    private String phone;
-    private String addr;
+    private char[] passportId;
+    private char[] birth;
+    private char[] firstName;
+    private char[] lastName;
+    private char[] country;
 }

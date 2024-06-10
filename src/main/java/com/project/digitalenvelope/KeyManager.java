@@ -29,27 +29,21 @@ public class KeyManager {
         return keypair;
     }
 
-
-
     public Key saveKey(Key key, String fileName) {
-        try(FileOutputStream fstream = new FileOutputStream(fileName)){
-            try(ObjectOutputStream ostream = new ObjectOutputStream(fstream)){
-                ostream.writeObject(key);
-            }
-        }catch(IOException e) {
+        try (FileOutputStream fstream = new FileOutputStream(fileName);
+             ObjectOutputStream ostream = new ObjectOutputStream(fstream)) {
+            ostream.writeObject(key);
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return key;
-
     }
 
     public Key loadKey(String fileName) {
         try(FileInputStream fis = new FileInputStream(fileName)){
             try(ObjectInputStream ois = new ObjectInputStream(fis)){
                 Object obj = ois.readObject();
-                Key key = (Key) obj;
-
-                return key;
+                return (Key) obj;
             }
         }catch(ClassNotFoundException e) {
             e.printStackTrace();
