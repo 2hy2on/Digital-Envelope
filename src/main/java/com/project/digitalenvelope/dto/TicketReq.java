@@ -15,5 +15,4 @@ public class TicketReq implements Serializable {
     private String to;
     private String seat;
     private String date;
-    private String gate;
 }
