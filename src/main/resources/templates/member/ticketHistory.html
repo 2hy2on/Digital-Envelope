@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Ticket History</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(to bottom, #cceeff 0%, #ffffff 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+
+            animation: fadeIn 1s ease-in-out; /* 페이드인 애니메이션 */
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .container {
+            max-width: 800px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.7); /* 투명한 배경 */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            animation: slideIn 1s ease-in-out; /* 슬라이드인 애니메이션 */
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .card {
+            margin-top: 20px;
+        }
+
+        .card-title,
+        .card-subtitle,
+        .card-text {
+            font-size: 24px; /* 크기를 24px로 키움 */
+            margin-bottom: 10px;
+            text-align: center; /* 가운데 정렬 */
+            letter-spacing: 1px; /* 글자 사이 간격 */
+        }
+
+        .card-title {
+            font-weight: bold;
+            font-size: 28px; /* 타이틀은 더 크게 */
+        }
+
+        .card-subtitle {
+            font-weight: bold;
+            font-size: 24px; /* 서브타이틀도 크게 */
+        }
+
+        .card-text {
+            font-size: 20px; /* 텍스트도 크게 */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="text-center mb-4">항공권 예약 정보</h1>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-subtitle mb-2 text-muted">출발지: <span th:text="${reservationRes.from}"></span></h5>
+            <h5 class="card-subtitle mb-2 text-muted">도착지: <span th:text="${reservationRes.to}"></span></h5>
+            <h5 class="card-subtitle mb-2 text-muted">출발일: <span th:text="${reservationRes.date}"></span></h5>
+            <h5 class="card-subtitle mb-2 text-muted">좌석: <span th:text="${reservationRes.seat}"></span></h5>
+            <h5 class="card-subtitle mb-2 text-muted">국적: <span th:text="${reservationRes.country}"></span></h5>
+            <h5 class="card-subtitle mb-2 text-muted">여권번호: <span th:text="${reservationRes.passportId}"></span></h5>
+            <h5 class="card-subtitle mb-2 text-muted">생년월일: <span th:text="${reservationRes.birth}"></span></h5>
+            <h5 class="card-subtitle mb-2 text-muted">성: <span th:text="${reservationRes.lastName}"></span></h5>
+            <h5 class="card-subtitle mb-2 text-muted">이름: <span th:text="${reservationRes.firstName}"></span></h5>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>항공권 예약 폼</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to bottom, #cceeff 0%, #ffffff 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+        }
+        .container {
+            max-width: 700px;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: 500;
+        }
+        input[type="text"],
+        input[type="tel"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        .flatpickr-input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        .btn-submit {
+            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 30px;
+            background-color: #007bff;
+            border-color: #007bff;
+            color: #fff;
+        }
+        .btn-submit:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <form action="/ticket" method="post">
+        <div class="form-group">
+            <label for="from">출발지 (국가):</label>
+            <select id="from" name="from" class="custom-select" required>
+                <option value="">출발지 선택</option>
+                <option value="미국">미국</option>
+                <option value="영국">영국</option>
+                <option value="프랑스">프랑스</option>
+                <option value="일본">일본</option>
+                <option value="중국">중국</option>
+                <option value="이탈리아">이탈리아</option>
+                <option value="독일">독일</option>
+                <option value="스페인">스페인</option>
+                <option value="캐나다">캐나다</option>
+                <option value="호주">호주</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="to">도착지 (국가):</label>
+            <select id="to" name="to" class="custom-select" required>
+                <option value="">도착지 선택</option>
+                <option value="미국">미국</option>
+                <option value="영국">영국</option>
+                <option value="프랑스">프랑스</option>
+                <option value="일본">일본</option>
+                <option value="중국">중국</option>
+                <option value="이탈리아">이탈리아</option>
+                <option value="독일">독일</option>
+                <option value="스페인">스페인</option>
+                <option value="캐나다">캐나다</option>
+                <option value="호주">호주</option>
+                <option value="브라질">브라질</option>
+                <option value="인도">인도</option>
+                <option value="러시아">러시아</option>
+                <option value="멕시코">멕시코</option>
+                <option value="네덜란드">네덜란드</option>
+                <option value="스위스">스위스</option>
+                <option value="스웨덴">스웨덴</option>
+                <option value="폴란드">폴란드</option>
+                <option value="노르웨이">노르웨이</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="seat">좌석:</label>
+            <select id="seat" name="seat" class="custom-select" required>
+                <option value="">좌석 선택</option>
+                <option value="1A">1A</option>
+                <option value="1B">1B</option>
+                <option value="1C">1C</option>
+                <option value="2A">2A</option>
+                <option value="2B">2B</option>
+                <option value="2C">2C</option>
+                <option value="3A">3A</option>
+                <option value="3B">3B</option>
+                <option value="3C">3C</option>
+                <option value="4A">4A</option>
+                <option value="4B">4B</option>
+                <option value="4C">4C</option>
+                <option value="5A">5A</option>
+                <option value="5B">5B</option>
+                <option value="5C">5C</option>
+                <option value="31A">31A</option>
+                <option value="31B">31B</option>
+                <option value="31C">31C</option>
+                <option value="31D">31D</option>
+                <option value="31E">31E</option>
+                <option value="31F">31F</option>
+                <option value="31G">31G</option>
+                <option value="31H">31H</option>
+                <option value="31J">31J</option>
+                <option value="31K">31K</option>
+                <option value="31L">31L</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="date">출발일:</label>
+            <input type="text" id="date" name="date" class="flatpickr-input" required>
+        </div>
+        <div class="form-group">
+            <label for="passportId">여권 번호:</label>
+            <input type="text" id="passportId" name="passportId" required>
+        </div>
+        <div class="form-group">
+            <label for="birth">생년월일:</label>
+            <input type="text" id="birth" name="birth" class="flatpickr-input" required>
+        </div>
+        <div class="form-group">
+            <label for="firstName">이름:</label>
+            <input type="text" id="firstName" name="firstName" required>
+        </div>
+        <div class="form-group">
+            <label for="lastName">성:</label>
+            <input type="text" id="lastName" name="lastName" required>
+        </div>
+        <div class="form-group">
+            <label for="country">국적:</label>
+            <select id="country" name="country" class="custom-select" required>
+                <option value="">국가 선택</option>
+                <option value="미국">미국</option>
+                <option value="영국">영국</option>
+                <option value="프랑스">프랑스</option>
+                <option value="일본">일본</option>
+                <option value="중국">중국</option>
+                <option value="이탈리아">이탈리아</option>
+                <option value="독일">독일</option>
+                <option value="스페인">스페인</option>
+                <option value="캐나다">캐나다</option>
+                <option value="호주">호주</option>
+                <option value="브라질">브라질</option>
+                <option value="인도">인도</option>
+                <option value="러시아">러시아</option>
+                <option value="멕시코">멕시코</option>
+                <option value="네덜란드">네덜란드</option>
+                <option value="스위스">스위스</option>
+                <option value="스웨덴">스웨덴</option>
+                <option value="폴란드">폴란드</option>
+                <option value="노르웨이">노르웨이</option>
+                <!-- Add more countries here -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="phone">전화번호:</label>
+            <input type="tel" id="phone" name="phone" required>
+        </div>
+        <div class="form-group">
+            <label for="addr">주소:</label>
+            <input type="text" id="addr" name="addr" required>
+        </div>
+        <button type="submit" class="btn btn-submit">예약하기</button>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    flatpickr("#date", {
+        dateFormat: "Y-m-d",
+        minDate: "today",
+    });
+    flatpickr("#birth", {
+        dateFormat: "Y-m-d",
+        maxDate: "today",
+    });
+</script>
+</body>
+</html>
