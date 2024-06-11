@@ -49,6 +49,15 @@
             background-color: #0056b3;
             border-color: #0056b3;
         }
+        .alert {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: rgba(255, 0, 0, 0.2); /* translucent red */
+            border: 1px solid #ff3333;
+            color: #ff3333;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
@@ -93,11 +102,13 @@
                 <option value="스웨덴">스웨덴</option>
                 <option value="폴란드">폴란드</option>
                 <option value="노르웨이">노르웨이</option>
-                <!-- Add more countries here -->
             </select>
         </div>
         <button type="submit" class="btn btn-submit">조회하기</button>
     </form>
+    <div th:if="${result == false}" class="alert" role="alert">
+        일치하는 예약 정보가 없습니다.
+    </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>

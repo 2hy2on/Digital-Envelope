@@ -1,8 +1,8 @@
 package com.project.digitalenvelope.service;
 
-import com.project.digitalenvelope.KeyManager;
-import com.project.digitalenvelope.SignatureManager;
-import com.project.digitalenvelope.SymmetricKeyManager;
+import com.project.digitalenvelope.keys.KeyManager;
+import com.project.digitalenvelope.keys.SignatureManager;
+import com.project.digitalenvelope.keys.SymmetricKeyManager;
 import com.project.digitalenvelope.dto.TicketReq;
 import com.project.digitalenvelope.dto.UserReq;
 import com.project.digitalenvelope.entity.Member;
@@ -20,7 +20,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.security.PublicKey;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Random;
 
 
@@ -35,6 +34,7 @@ public class TicketService {
     final TicketRepository ticketRepository;
 
     public boolean bookTicket(UserReq userReq, TicketReq ticketReq){ //전자 서명 생성
+
         Random random = new Random();
         int randomNum = random.nextInt(1001);
 
@@ -47,6 +47,11 @@ public class TicketService {
         //직렬화
         byte[] userData = serializeObject(userReq);
 
+
+        Arrays.fill(userReq.getBirth(), ' ');
+        Arrays.fill(userReq.getCountry(), ' ');
+        Arrays.fill(userReq.getLastName(), ' ');
+        Arrays.fill(userReq.getPassportId(), ' ');
 
         //전자봉투 생성
         SignatureManager signatureManager = new SignatureManager();
@@ -86,6 +91,7 @@ public class TicketService {
         String firstName = new String(charArray);
         Member member = memberRepository.findByFirstName(firstName);
 
+
         //퍼블릭키 가져오기
         String publicKeyName = member.getPublicKeyPath();
         KeyManager keyManager = new KeyManager();
@@ -113,12 +119,12 @@ public class TicketService {
             return deserializeTicket(ticketData);
         }
         else {
-            throw new RuntimeException();
+            return new TicketReq();
         }
 
     }
 
-    public TicketReq deserializeTicket(byte[] ticketData) {
+    private TicketReq deserializeTicket(byte[] ticketData) {
         TicketReq ticketReq = null;
         try {
             ByteArrayInputStream bis = new ByteArrayInputStream(ticketData);
