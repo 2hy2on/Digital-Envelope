@@ -8,14 +8,13 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Getter
-@Setter
 public class Ticket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long ticketId;
+    private Long ticketId;
 
     private byte[] info;
 
-    public Long memberId;
+    private Long memberId;
 }

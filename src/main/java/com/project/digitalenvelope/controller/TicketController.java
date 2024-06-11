@@ -47,25 +47,31 @@ public class TicketController {
     @PostMapping("/ticket/history")
     public String showMemberReservation(Model model, UserReq userReq) {
         TicketReq ticketReq = ticketService.readTicketHistory(userReq);
-        ReservationRes reservationRes = ReservationRes.builder()
-                .seat(ticketReq.getSeat())
-                .passportId(userReq.getPassportId())
-                .lastName(userReq.getLastName())
-                .firstName(userReq.getFirstName())
-                .from(ticketReq.getFrom())
-                .to(ticketReq.getTo())
-                .date(ticketReq.getDate())
-                .birth(userReq.getBirth())
-                .country(userReq.getCountry())
-                .build();
-        model.addAttribute("reservationRes", reservationRes);
-        model.addAttribute("lastName", String.valueOf(reservationRes.getLastName()));
-        model.addAttribute("firstName", String.valueOf(reservationRes.getFirstName()));
-        model.addAttribute("passportId", String.valueOf(reservationRes.getPassportId()));
-        model.addAttribute("birth", String.valueOf(reservationRes.getBirth()));
-        model.addAttribute("country", String.valueOf(reservationRes.getCountry()));
-
-        return "/member/ticketHistory";
+        if(ticketReq.getDate() == null){
+            model.addAttribute("result", false);
+            log.info("들어옴");
+            return "/member/mypage";
+        }
+        else{
+            ReservationRes reservationRes = ReservationRes.builder()
+                    .seat(ticketReq.getSeat())
+                    .passportId(userReq.getPassportId())
+                    .lastName(userReq.getLastName())
+                    .firstName(userReq.getFirstName())
+                    .from(ticketReq.getFrom())
+                    .to(ticketReq.getTo())
+                    .date(ticketReq.getDate())
+                    .birth(userReq.getBirth())
+                    .country(userReq.getCountry())
+                    .build();
+            model.addAttribute("reservationRes", reservationRes);
+            model.addAttribute("lastName", String.valueOf(reservationRes.getLastName()));
+            model.addAttribute("firstName", String.valueOf(reservationRes.getFirstName()));
+            model.addAttribute("passportId", String.valueOf(reservationRes.getPassportId()));
+            model.addAttribute("birth", String.valueOf(reservationRes.getBirth()));
+            model.addAttribute("country", String.valueOf(reservationRes.getCountry()));
+            return "/member/ticketHistory";
+        }
     }
 
 

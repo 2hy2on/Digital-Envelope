@@ -1,4 +1,4 @@
-package com.project.digitalenvelope;
+package com.project.digitalenvelope.keys;
 
 import lombok.Getter;
 
