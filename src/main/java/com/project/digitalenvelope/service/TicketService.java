@@ -44,9 +44,9 @@ public class TicketService {
         //로컬에 저장
         keyManager.saveKey(keyManager.getPrivateKey(),randomNum+"privateKey");
         keyManager.saveKey(keyManager.getPublicKey(), randomNum+"publicKey");
+
         //직렬화
         byte[] userData = serializeObject(userReq);
-
 
         Arrays.fill(userReq.getBirth(), ' ');
         Arrays.fill(userReq.getCountry(), ' ');
